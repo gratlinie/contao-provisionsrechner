@@ -24,14 +24,7 @@ composer require gratlinie/contao-provisionsrechner
 vendor/bin/contao-console contao:migrate
 ```
 
-Oder über den Contao Manager. Solange das Paket noch nicht bei Packagist liegt, vorher das
-Repository in die `composer.json` der Installation eintragen:
-
-```json
-"repositories": [
-    { "type": "vcs", "url": "https://github.com/gratlinie/contao-provisionsrechner" }
-]
-```
+Oder über den Contao Manager: nach „Provisionsrechner“ suchen und installieren.
 
 ## Einrichtung
 
