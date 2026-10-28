@@ -21,20 +21,15 @@
             days: 'MSC.provisionsrechner.days'|trans,
         } %}
 
-        <div class="pr-calc" data-provisionsrechner data-years="{{ years }}" data-locale="{{ app.request.locale|replace({'_': '-'}) }}" data-messages="{{ messages|json_encode }}">
+        <div class="pr-calc" data-provisionsrechner data-years="{{ years }}" data-currency="{{ currency }}" data-locale="{{ app.request.locale|replace({'_': '-'}) }}" data-messages="{{ messages|json_encode }}">
             <form class="pr-calc__inputs" onsubmit="return false">
-                <label class="pr-calc__field">
-                    <span class="pr-calc__label">{{ 'MSC.provisionsrechner.orders'|trans }} <output data-out="orders">{{ orders }}</output></span>
-                    <input type="range" name="orders" min="10" max="400" step="5" value="{{ orders }}">
-                </label>
-                <label class="pr-calc__field">
-                    <span class="pr-calc__label">{{ 'MSC.provisionsrechner.average'|trans }} <output data-out="average">{{ average }} €</output></span>
-                    <input type="range" name="average" min="10" max="80" step="1" value="{{ average }}">
-                </label>
-                <label class="pr-calc__field">
-                    <span class="pr-calc__label">{{ 'MSC.provisionsrechner.rate'|trans }} <output data-out="rate">{{ rate|number_format(rate == rate|round ? 0 : 1, ',') }} %</output></span>
-                    <input type="range" name="rate" min="5" max="35" step="0.5" value="{{ rate }}">
-                </label>
+                {% for key, slider in sliders %}
+                    {% set initial = key == 'rate' ? slider.value|number_format(slider.value == slider.value|round ? 0 : 1, ',') ~ ' %' : (key == 'average' ? slider.value|number_format(0, ',', '.') ~ ' ' ~ currency : slider.value) %}
+                    <label class="pr-calc__field">
+                        <span class="pr-calc__label">{{ slider.label ?: ('MSC.provisionsrechner.' ~ key)|trans }} <output data-out="{{ key }}">{{ initial }}</output></span>
+                        <input type="range" name="{{ key }}" min="{{ slider.min }}" max="{{ slider.max }}" step="{{ slider.step }}" value="{{ slider.value }}">
+                    </label>
+                {% endfor %}
                 {% if offers|length > 1 %}
                     <fieldset class="pr-calc__offers">
                         <legend class="pr-calc__label">{{ 'MSC.provisionsrechner.compare'|trans }}</legend>

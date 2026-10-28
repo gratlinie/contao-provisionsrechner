@@ -20,6 +20,15 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 #[AsFrontendModule(type: 'provisionsrechner', category: 'miscellaneous', template: 'frontend_module/provisionsrechner')]
 class ProvisionsrechnerController extends AbstractFrontendModuleController
 {
+    /**
+     * Default start, minimum, maximum and step of each slider.
+     */
+    public const SLIDERS = [
+        'orders' => ['60', '10', '400', '5'],
+        'average' => ['25', '10', '80', '1'],
+        'rate' => ['14', '5', '35', '0.5'],
+    ];
+
     public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
     {
     }
@@ -45,11 +54,37 @@ class ProvisionsrechnerController extends AbstractFrontendModuleController
 
         $template->set('offers', $offers);
         $template->set('name', $model->prName ?: 'Eigener Shop');
-        $template->set('orders', min(400, max(10, (int) $model->prOrders ?: 60)));
-        $template->set('average', min(80, max(10, (int) $model->prAverage ?: 25)));
-        $template->set('rate', min(35, max(5, (float) $model->prRate ?: 14)));
-        $template->set('years', min(10, max(2, (int) $model->prYears ?: 3)));
+        $template->set('currency', strtoupper((string) $model->prCurrency) ?: 'EUR');
+        $template->set('years', min(20, max(1, (int) $model->prYears ?: 3)));
+        $template->set('sliders', [
+            'orders' => $this->slider('orders', $model->prOrders, $model->prOrdersLabel),
+            'average' => $this->slider('average', $model->prAverage, $model->prAverageLabel),
+            'rate' => $this->slider('rate', $model->prRate, $model->prRateLabel),
+        ]);
 
         return $template->getResponse();
+    }
+
+    /**
+     * @return array{label: string|null, value: float, min: float, max: float, step: float}
+     */
+    private function slider(string $name, mixed $config, string|null $label): array
+    {
+        $values = StringUtil::deserialize($config, true);
+        $number = static fn (int $index): float => (float) str_replace(',', '.', (string) (($values[$index] ?? '') !== '' ? $values[$index] : self::SLIDERS[$name][$index]));
+
+        [$min, $max, $step] = [$number(1), $number(2), $number(3)];
+
+        if ($max <= $min || $step <= 0) {
+            [$min, $max, $step] = array_map('floatval', \array_slice(self::SLIDERS[$name], 1));
+        }
+
+        return [
+            'label' => trim((string) $label) ?: null,
+            'value' => min($max, max($min, $number(0))),
+            'min' => $min,
+            'max' => $max,
+            'step' => $step,
+        ];
     }
 }

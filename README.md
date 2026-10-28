@@ -24,11 +24,15 @@ Oder über den Contao Manager.
 ## Einrichtung
 
 1. Theme → Frontend-Module → neues Modul vom Typ **Provisionsrechner**.
-2. Namen des eigenen Angebots eintragen (z. B. „GratOrder“ → „GratOrder-Abo pro Jahr“),
-   Startwerte der Regler und den Vergleichszeitraum festlegen.
-3. Unter **Angebote** je Zeile Titel, laufende Kosten pro Jahr und einmalige Kosten
-   (netto) eintragen.
-4. Modul per Inhaltselement „Modul“ oder im Seitenlayout einbinden.
+2. **Rechner:** Name des eigenen Angebots (z. B. „GratOrder“ → „GratOrder-Abo pro Jahr“),
+   Währung (ISO-Code, z. B. EUR) und Vergleichszeitraum in Jahren.
+3. **Regler:** für Bestellungen pro Woche, Bestellwert und Provision je Startwert,
+   Minimum, Maximum und Schrittweite, auf Wunsch eine eigene Beschriftung (z. B.
+   „Buchungen pro Woche“ für andere Branchen).
+4. **Angebote:** je Zeile Titel, laufende Kosten pro Jahr und einmalige Kosten (netto).
+   Mehrere Angebote erscheinen als Auswahl. Leer lassen, wenn eine andere Erweiterung die
+   Angebote liefert (siehe unten).
+5. Modul per Inhaltselement „Modul“ oder im Seitenlayout einbinden.
 
 ## Gestaltung
 

@@ -5,7 +5,7 @@
         const form = root.querySelector('form');
         const messages = JSON.parse(root.dataset.messages || '{}');
         const years = Number(root.dataset.years);
-        const euro = new Intl.NumberFormat(root.dataset.locale || 'de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+        const euro = new Intl.NumberFormat(root.dataset.locale || 'de-DE', { style: 'currency', currency: root.dataset.currency || 'EUR', maximumFractionDigits: 0 });
         const out = (name, text) => {
             root.querySelector(`[data-out="${name}"]`).textContent = text;
         };
