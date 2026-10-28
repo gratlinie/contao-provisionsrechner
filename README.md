@@ -1,10 +1,15 @@
+<img src="docs/logo.svg" width="80" alt="Provisionsrechner">
+
 # Provisionsrechner für Contao
 
-Frontend-Modul für Contao 5.7: Restaurants (und alle, die über Bestellplattformen
-verkaufen) sehen auf einen Blick, was sie die Provision der Plattform kostet – und ab
-wann sich ein eigener Shop rechnet.
+Frontend-Modul für Contao 5.7: Wer über eine Plattform verkauft oder vermittelt wird, sieht
+auf einen Blick, was ihn die Provision im Jahr kostet – und ab wann sich eine eigene Lösung
+rechnet. Ob Restaurant und Lieferdienst, Hotel und Buchungsportal, Händler und Marktplatz
+oder Handwerk und Vermittlungsportal: Beschriftungen, Bereiche und Angebote stellst du im
+Modul ein.
 
-- Regler für Bestellungen pro Woche, durchschnittlichen Bestellwert und Provision
+- Drei Regler (Standard: Bestellungen pro Woche, durchschnittlicher Bestellwert,
+  Provision) – Beschriftung, Start, Minimum, Maximum und Schritt frei wählbar
 - Ergebnis live im Browser: Provision pro Jahr, Kosten des eigenen Angebots, Ersparnis im
   ersten Jahr und über einen Zeitraum, Balkenvergleich, Amortisation einer Einmalzahlung
 - Mehrere Angebote (z. B. „nur Abo“, „mit Einrichtung“) als Auswahl

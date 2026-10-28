@@ -2,4 +2,4 @@
 
 declare(strict_types=1);
 
-$GLOBALS['TL_LANG']['FMD']['provisionsrechner'] = ['Provisionsrechner', 'Vergleicht die Provision einer Bestellplattform mit den Kosten eines eigenen Shops.'];
+$GLOBALS['TL_LANG']['FMD']['provisionsrechner'] = ['Provisionsrechner', 'Vergleicht die Provision einer Plattform mit den Kosten einer eigenen Lösung.'];

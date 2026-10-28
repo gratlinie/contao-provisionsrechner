@@ -1,7 +1,7 @@
 {
     "name": "gratlinie/contao-provisionsrechner",
-    "description": "Provisionsrechner für Contao: vergleicht die Provision einer Bestellplattform mit den Kosten eines eigenen Shops",
-    "keywords": ["contao", "restaurant", "provision", "rechner", "lieferando"],
+    "description": "Provisionsrechner für Contao: zeigt, was die Provision einer Plattform kostet, und vergleicht sie mit den Kosten einer eigenen Lösung",
+    "keywords": ["contao", "provision", "rechner", "plattform", "marktplatz", "lieferdienst", "buchungsportal", "restaurant"],
     "type": "contao-bundle",
     "license": "MIT",
     "authors": [

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1
+
+- Beschreibung allgemeiner gefasst: Provision jeder Plattform (Lieferdienst, Buchungsportal,
+  Marktplatz …) gegenüber einer eigenen Lösung
+- Icon im README
+
 ## 0.1.0
 
 - Frontend-Modul „Provisionsrechner“ (aus der GratOrder-Landingpage herausgelöst)
