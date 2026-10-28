@@ -1,0 +1,69 @@
+{#
+    Provisionsrechner: Regler für Bestellungen, Bestellwert und Provision, daneben das
+    Ergebnis. Gerechnet wird im Browser (bundles/gratlinieprovisionsrechner/provisionsrechner.js).
+#}
+{% extends '@Contao/frontend_module/_base.html.twig' %}
+{% trans_default_domain 'contao_default' %}
+
+{% block content %}
+    {% if offers is not empty %}
+        {% add 'provisionsrechner' to head %}
+            <link rel="stylesheet" href="{{ asset('provisionsrechner.css', 'gratlinie_provisionsrechner') }}">
+            <script src="{{ asset('provisionsrechner.js', 'gratlinie_provisionsrechner') }}" defer></script>
+        {% endadd %}
+
+        {% set messages = {
+            none: 'MSC.provisionsrechner.none'|trans([name]),
+            monthly: 'MSC.provisionsrechner.monthly'|trans,
+            payback: 'MSC.provisionsrechner.payback'|trans,
+            moreThanYear: 'MSC.provisionsrechner.moreThanYear'|trans,
+            day: 'MSC.provisionsrechner.day'|trans,
+            days: 'MSC.provisionsrechner.days'|trans,
+        } %}
+
+        <div class="pr-calc" data-provisionsrechner data-years="{{ years }}" data-locale="{{ app.request.locale|replace({'_': '-'}) }}" data-messages="{{ messages|json_encode }}">
+            <form class="pr-calc__inputs" onsubmit="return false">
+                <label class="pr-calc__field">
+                    <span class="pr-calc__label">{{ 'MSC.provisionsrechner.orders'|trans }} <output data-out="orders">{{ orders }}</output></span>
+                    <input type="range" name="orders" min="10" max="400" step="5" value="{{ orders }}">
+                </label>
+                <label class="pr-calc__field">
+                    <span class="pr-calc__label">{{ 'MSC.provisionsrechner.average'|trans }} <output data-out="average">{{ average }} €</output></span>
+                    <input type="range" name="average" min="10" max="80" step="1" value="{{ average }}">
+                </label>
+                <label class="pr-calc__field">
+                    <span class="pr-calc__label">{{ 'MSC.provisionsrechner.rate'|trans }} <output data-out="rate">{{ rate|number_format(rate == rate|round ? 0 : 1, ',') }} %</output></span>
+                    <input type="range" name="rate" min="5" max="35" step="0.5" value="{{ rate }}">
+                </label>
+                {% if offers|length > 1 %}
+                    <fieldset class="pr-calc__offers">
+                        <legend class="pr-calc__label">{{ 'MSC.provisionsrechner.compare'|trans }}</legend>
+                        {% for offer in offers %}
+                            <label class="pr-calc__offer">
+                                <input type="radio" name="offer" value="{{ offer.code }}" data-yearly="{{ offer.yearly }}" data-once="{{ offer.once }}"{{ loop.first ? ' checked' }}>
+                                <span>{{ offer.title }}</span>
+                            </label>
+                        {% endfor %}
+                    </fieldset>
+                {% else %}
+                    <input type="hidden" name="offer" value="{{ offers[0].code }}" data-yearly="{{ offers[0].yearly }}" data-once="{{ offers[0].once }}">
+                {% endif %}
+            </form>
+
+            <div class="pr-calc__result" aria-live="polite">
+                <p class="pr-calc__headline" data-out="headline">–</p>
+                <dl class="pr-calc__figures">
+                    <div><dt>{{ 'MSC.provisionsrechner.commission'|trans }}</dt><dd data-out="commission">–</dd></div>
+                    <div><dt>{{ 'MSC.provisionsrechner.yearly'|trans([name]) }}</dt><dd data-out="yearly">–</dd></div>
+                    <div data-row="once"><dt>{{ 'MSC.provisionsrechner.once'|trans }}</dt><dd data-out="once">–</dd></div>
+                    <div class="pr-calc__total"><dt>{{ 'MSC.provisionsrechner.firstYear'|trans }}</dt><dd data-out="year1">–</dd></div>
+                    <div><dt>{{ 'MSC.provisionsrechner.inYears'|trans([years]) }}</dt><dd data-out="yearN">–</dd></div>
+                </dl>
+                <div class="pr-calc__bars" aria-hidden="true">
+                    <div class="pr-calc__bar"><span>{{ 'MSC.provisionsrechner.platformYears'|trans([years]) }} <b data-out="platformN">–</b></span><i data-bar="platform"></i></div>
+                    <div class="pr-calc__bar pr-calc__bar--own"><span>{{ 'MSC.provisionsrechner.ownYears'|trans([name, years]) }} <b data-out="ownN">–</b></span><i data-bar="own"></i></div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
