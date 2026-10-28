@@ -15,6 +15,8 @@ Modul ein.
 - Mehrere Angebote (z. B. „nur Abo“, „mit Einrichtung“) als Auswahl
 - Vanilla-JS und -CSS, kein Build, kein Framework; Texte auf Deutsch und Englisch
 
+![Provisionsrechner mit drei Reglern und Ergebnis: Provision pro Jahr, Kosten des eigenen Angebots, Ersparnis und Balkenvergleich](docs/screenshot.webp)
+
 Live im Einsatz auf [gratorder.de](https://www.gratorder.de/#sparrechner).
 
 ## Installation
